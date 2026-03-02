@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Байланыс - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container-fluid">
+        <h1>📞 Байланыс</h1>
+        <p>Бізбен байланысу үшін төмендегі мəліметтерді пайдаланыңыз</p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container-fluid">
+        {% if success %}
+        <div class="success-message">
+            <div class="success-icon">✅</div>
+            <h2>Хатыңыз жіберілді!</h2>
+            <p>Рахмет! Біз сіздің хатыңызды алдық жəне жақын арада жауап береміз.</p>
+            <a href="{% url 'contact_page' %}" class="see-all-btn">Жаңа хат жазу</a>
+        </div>
+        {% endif %}
+        
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Телефон</h3>
+                <p>+7 777 123 45 67</p>
+                <p>+7 727 123 45 67</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>Email</h3>
+                <p>info@qaznews.kz</p>
+                <p>press@qaznews.kz</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Мекен-жай</h3>
+                <p>Алматы қ., Əл-Фараби даңғылы, 1</p>
+                <p>Бизнес-орталық "Almaty Tower"</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">🕐</div>
+                <h3>Жұмыс уақыты</h3>
+                <p>Дүйсенбі - Жұма: 09:00 - 18:00</p>
+                <p>Сенбі - Жексенбі: Демалыс</p>
+            </div>
+        </div>
+        
+        {% if not success %}
+        <div class="contact-form-section">
+            <h2>📝 Хат жазу</h2>
+            <p>Сұрақтарыңыз немесе ұсыныстарыңыз болса, төмендегі форманы толтырыңыз</p>
+            
+            {% if error_message %}
+            <div class="error-alert">{{ error_message }}</div>
+            {% endif %}
+            
+            <form class="contact-form" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Аты-жөні</label>
+                        <input type="text" id="name" name="name" placeholder="Сіздің аты-жөніңіз" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Сіздің email-іңіз" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Тақырып</label>
+                    <input type="text" id="subject" name="subject" placeholder="Хаттың тақырыбы" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Хат мəтіні</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Сіздің хатыңыз..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Жіберу</button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <div class="contact-map">
+            <h2>🗺️ Біздің орналасқан жеріміз</h2>
+            <div class="map-placeholder">
+                <p>📍 Алматы қ., Əл-Фараби даңғылы, 1</p>
+                <p>Almaty Tower</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.success-message {
+    text-align: center;
+    background: var(--white);
+    padding: 50px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+.success-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+.success-message h2 {
+    font-size: 26px;
+    color: #28a745;
+    margin-bottom: 12px;
+}
+.success-message p {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+.error-alert {
+    background: #fee;
+    color: #c00;
+    padding: 15px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border: 1px solid #fcc;
+}
+</style>
+{% endblock %}

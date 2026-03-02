@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Құпиялық саясаты - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container-fluid">
+        <h1>🔒 Құпиялық саясаты</h1>
+        <p>Біздің сайтта сіздің құпиялығыңыз қорғалған</p>
+    </div>
+</section>
+
+<section class="privacy-section">
+    <div class="container-fluid">
+        <div class="privacy-content">
+            <h2>1. Жалпы ережелер</h2>
+            <p>Бұл Құпиялық саясаты QazNews веб-сайтын пайдалану кезінде сіздің жеке ақпаратыңызды қалай жинайтынымызды, пайдаланатынымызды жəне қорғайтынымызды түсіндіреді. Біз сіздің құпиялығыңызға үлкен мəн береміз.</p>
+
+            <h2>2. Жинайтын ақпарат</h2>
+            <p>Біз келесі ақпаратты жинай аламыз:</p>
+            <ul>
+                <li>Толтырған кездегі аты-жөні жəне email мекенжайы (қатысу формасы арқылы)</li>
+                <li>Сайтты пайдалану кезіндегі əрекеттер</li>
+                <li>Браузер түрі жəне құрылғы ақпараты</li>
+            </ul>
+
+            <h2>3. Ақпаратты пайдалану</h2>
+            <p>Жиналған ақпаратты келесі мақсаттарда пайдаланамыз:</p>
+            <ul>
+                <li>Сізге қызмет көрсету жəне сайтты жақсарту</li>
+                <li>Жаңалықтар мен жаңартулар туралы хабарлау</li>
+                <li>Сұрақтарыңызға жауап беру</li>
+            </ul>
+
+            <h2>4. Ақпаратты қорғау</h2>
+            <p>Біз сіздің ақпаратыңызды қорғау үшін заманауи қауіпсіздік шараларын қолданамыз. Барлық деректер құпия сөзбен қорғалған серверлерде сақталады.</p>
+
+            <h2>5. Құпиялық саясатының өзгерістер</h2>
+            <p>Біз осы құпиялық саясатын кез келген уақытта өзгерте аламыз. Өзгерістер осы бетте жарияланады.</p>
+
+            <h2>6. Байланыс</h2>
+            <p>Егер сұрақтарыңыз болса, biz@qaznews.kz мекенжайына хат жазуыңызды сұраймыз.</p>
+
+            <p class="last-update">Соңғы жаңарту: {{ current_date|date:"d.m.Y" }}</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.privacy-section {
+    padding: 40px 0 80px;
+}
+.privacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+.privacy-content h2 {
+    font-size: 22px;
+    color: var(--dark);
+    margin: 30px 0 15px;
+}
+.privacy-content h2:first-child {
+    margin-top: 0;
+}
+.privacy-content p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+.privacy-content ul {
+    margin: 10px 0 20px 20px;
+}
+.privacy-content li {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 8px;
+}
+.last-update {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--grey);
+    font-size: 13px;
+    color: var(--grey-dark);
+}
+@media (max-width: 767px) {
+    .privacy-content {
+        padding: 20px;
+    }
+    .privacy-content h2 {
+        font-size: 18px;
+    }
+}
+</style>
+{% endblock %}

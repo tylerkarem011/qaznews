@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Тіркелу - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container-fluid">
+        <h1>📝 Тіркелу</h1>
+        <p>Жаңа есептік жасаңыз</p>
+    </div>
+</section>
+
+<section class="auth-section">
+    <div class="container-fluid">
+        <div class="auth-container">
+            {% if success %}
+            <div class="success-message">
+                <div class="success-icon">✅</div>
+                <h2>Тіркелу сәтті!</h2>
+                <p>Сіз қазір сайтқа кірдіңіз.</p>
+                <a href="{% url 'home_page' %}" class="see-all-btn">Басты бет</a>
+            </div>
+            {% endif %}
+            
+            {% if error_message %}
+            <div class="error-alert">{{ error_message }}</div>
+            {% endif %}
+            
+            {% if not success %}
+            <form class="auth-form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Қолданушы аты</label>
+                    <input type="text" id="username" name="username" placeholder="Қолданушы аты" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email мекенжайы" required>
+                </div>
+                <div class="form-group">
+                    <label for="password1">Құпия сөз</label>
+                    <input type="password" id="password1" name="password1" placeholder="Құпия сөз" required>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Құпия сөз (қайтадан)</label>
+                    <input type="password" id="password2" name="password2" placeholder="Құпия сөзді қайтадан енгізіңіз" required>
+                </div>
+                <button type="submit" class="submit-btn">Тіркелу</button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Есептік бар ма? <a href="{% url 'login_page' %}">Кіру</a></p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<style>
+.auth-section {
+    padding: 40px 0;
+    padding-bottom: 80px;
+}
+
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.auth-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.auth-form input {
+    padding: 14px 16px;
+    border: 2px solid var(--grey);
+    border-radius: var(--radius);
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.auth-form .submit-btn {
+    padding: 14px;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.auth-form .submit-btn:hover {
+    background: var(--accent-hover);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--grey);
+}
+
+.auth-links p {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.auth-links a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.error-alert {
+    background: #fee;
+    color: #c00;
+    padding: 14px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.success-message {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.success-message h2 {
+    font-size: 22px;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}

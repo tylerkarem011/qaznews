@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}500 - Қате - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header" style="background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);">
+    <div class="container-fluid">
+        <h1>⚠️ 500</h1>
+        <p>Ішкі қате</p>
+    </div>
+</section>
+
+<section class="error-section">
+    <div class="container-fluid">
+        <div class="error-content">
+            <div class="error-icon">🔧</div>
+            <h2>Бір нəрсе дұрыс болмады</h2>
+            <p>Серверде уақытша қате пайда болды. Біз жақын арада оны түзетеміз.</p>
+            <div class="error-actions">
+                <a href="{% url 'home_page' %}" class="see-all-btn">Басты бетке оралу</a>
+                <a href="javascript:location.reload()" class="see-all-btn" style="background: var(--dark);">Қайта жүктеу</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.error-section {
+    padding: 60px 0;
+}
+.error-content {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 50px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+.error-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+.error-content h2 {
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+.error-content p {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+</style>
+{% endblock %}

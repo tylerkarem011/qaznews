@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}QazNews - Қазақстанның жаңалықтары{% endblock %}</title>
+    <meta name="description" content="QazNews - Қазақстанның соңғы жаңалықтары, саясат, экономика, спорт, мәдениет жаңалықтары">
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static './img/logo.svg' %}">
+    <meta name="theme-color" content="#1a1a2e">
+</head>
+
+<body>
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Жоғарыға оралу">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <header class="header">
+        <div class="primary-header">
+            <div class="container">
+                <nav class="top-nav">
+                    <a href="{% url 'home_page' %}">Басты бет</a>
+                    <a href="{% url 'about_page' %}">Біз туралы</a>
+                    <a href="{% url 'faq_page' %}">FAQ</a>
+                    <a href="{% url 'contact_page' %}">Байланыс</a>
+                </nav>
+                <nav class="social-nav">
+                    <a href="https://threads.net" target="_blank" rel="noopener noreferrer" aria-label="Threads">
+                        <img src="{% static './img/threads.svg' %}" alt="Threads">
+                    </a>
+                    <a href="https://t.me/qaznews" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                        <img src="{% static './img/telegram.svg' %}" alt="Telegram">
+                    </a>
+                    <a href="https://instagram.com/qaznews" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="{% static './img/instagram.svg' %}" alt="Instagram">
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="secondary-header">
+                <div class="container-fluid">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout_view' %}" class="login-btn" title="Шығу">
+                        <img src="{% static './img/user.svg' %}" alt="Logout">
+                        <span>{{ user.username }}</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login_page' %}" class="login-btn" title="Сайтқа кіру">
+                        <img src="{% static './img/user.svg' %}" alt="Login">
+                        <span>Кіру</span>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'home_page' %}" class="logo">
+                        <img src="{% static './img/logo.svg' %}" alt="QazNews">
+                    </a>
+                    <a href="tel:+77771234567" class="phone-btn">
+                        <img src="{% static './img/phone.svg' %}" alt="Телефон">
+                        <span>+7 777 120 85 68</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="third-header" id="mainNav">
+                <div class="container-fluid">
+                    <nav class="main-nav">
+                        <a href="{% url 'all_news_page' %}" class="nav-link">Барлық жаңалықтар</a>
+                        {% for category in categories %}
+                        <a href="{% url 'news_by_category' pk=category.pk %}" class="nav-link">{{ category.name }}</a>
+                        {% endfor %}
+                    </nav>
+                    <a href="{% url 'search_page' %}" class="search-btn">
+                        <img src="{% static './img/search.svg' %}" alt="Іздеу">
+                        <span>Іздеу</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="{% url 'home_page' %}">
+                        <img src="{% static './img/logo-white.svg' %}" alt="QazNews">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <a href="{% url 'home_page' %}">Басты бет</a>
+                    <a href="{% url 'about_page' %}">Біз туралы</a>
+                    <a href="{% url 'privacy_page' %}">Құпиялық саясаты</a>
+                    <a href="{% url 'contact_page' %}">Байланыс</a>
+                    <a href="{% url 'faq_page' %}">FAQ</a>
+                    <a href="{% url 'admin:index' %}">Админ панель</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://threads.net" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static './img/threads.svg' %}" alt="Threads">
+                    </a>
+                    <a href="https://t.me/qaznews" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static './img/telegram.svg' %}" alt="Telegram">
+                    </a>
+                    <a href="https://instagram.com/qaznews" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static './img/instagram.svg' %}" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+            <p class="copyright">&copy; QazNews <span id="currentYear"></span>, Барлық құқықтар қорғалған.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+    </script>
+</body>
+
+</html>

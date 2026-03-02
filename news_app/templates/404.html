@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Бет табылмады - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header" style="background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);">
+    <div class="container-fluid">
+        <h1>😕 404</h1>
+        <p>Бет табылмады</p>
+    </div>
+</section>
+
+<section class="error-section">
+    <div class="container-fluid">
+        <div class="error-content">
+            <div class="error-icon">🔍</div>
+            <h2>Кешіріңіз, бұл бет жоқ</h2>
+            <p>Сіз іздеген бет өшірілген немесе мүлдем болмауы мүмкін.</p>
+            <div class="error-actions">
+                <a href="{% url 'home_page' %}" class="see-all-btn">Басты бетке оралу</a>
+                <a href="{% url 'all_news_page' %}" class="see-all-btn" style="background: var(--dark);">Жаңалықтар</a>
+            </div>
+        </div>
+        
+        <div class="popular-posts-list" style="margin-top: 40px;">
+            <h3 style="text-align: center; margin-bottom: 20px;">🔥 Танымал жаңалықтар</h3>
+            {% for popular in popular_posts %}
+            <a href="{% url 'read_news_page' pk=popular.pk %}" class="popular-post-item">
+                <img src="{{ popular.image_url }}" alt="{{ popular.title }}">
+                <div class="popular-post-info">
+                    <h4>{{ popular.title|truncatewords:6 }}</h4>
+                    <span>{{ popular.created_at|date:"d.m.Y" }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+.error-section {
+    padding: 60px 0;
+}
+.error-content {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 50px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+.error-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+.error-content h2 {
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+.error-content p {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+</style>
+{% endblock %}

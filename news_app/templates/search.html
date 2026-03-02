@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Іздеу - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container-fluid">
+        <h1>🔍 Жаңалықтарды іздеу</h1>
+        <p>Сізді қызықтыратын тақырыпты іздеңіз</p>
+    </div>
+</section>
+
+<section class="search-section">
+    <div class="container-fluid">
+        <form action="{% url 'search_results' %}" method="GET" class="search-form">
+            <div class="search-input-wrapper">
+                <img src="{% static './img/search.svg' %}" alt="Іздеу">
+                <input type="text" name="q" placeholder="Жаңалықтарды іздеу..." required value="{{ query|default:'' }}">
+            </div>
+            <button type="submit">Іздеу</button>
+        </form>
+        
+        <div class="search-suggestions">
+            <h3>Ұсынылатын іздеулер:</h3>
+            <div class="suggestion-tags">
+                {% for category in categories %}
+                <a href="{% url 'search_results' %}?q={{ category.name }}" class="suggestion-tag">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="news-block">
+    <div class="container-fluid">
+        <div class="sidebar">
+            <div class="sidebar-section popular-posts">
+                <h3>🔥 Танымал</h3>
+                <div class="popular-posts-list">
+                    {% for popular in popular_posts %}
+                    <a href="{% url 'read_news_page' pk=popular.pk %}" class="popular-post-item">
+                        <img src="{{ popular.image_url }}" alt="{{ popular.title }}">
+                        <div class="popular-post-info">
+                            <h4>{{ popular.title|truncatewords:6 }}</h4>
+                            <span>{{ popular.created_at|date:"d.m.Y" }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="sidebar-section adv-section">
+                <h3>📢 Жарнама</h3>
+                <div class="adv-block__info">
+                    {% for adv in advs|slice:":2" %}
+                    <a href="#" class="adv-item">
+                        <img src="{{ adv.image_url }}" alt="{{ adv.name }}">
+                        <span class="adv-label">Жарнама</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile Sidebar -->
+<div class="mobile-sidebar">
+    <div class="sidebar-section popular-posts">
+        <h3>🔥 Танымал</h3>
+        <div class="popular-posts-list">
+            {% for popular in popular_posts|slice:":3" %}
+            <a href="{% url 'read_news_page' pk=popular.pk %}" class="popular-post-item">
+                <img src="{{ popular.image_url }}" alt="{{ popular.title }}">
+                <div class="popular-post-info">
+                    <h4>{{ popular.title|truncatewords:6 }}</h4>
+                    <span>{{ popular.created_at|date:"d.m.Y" }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="sidebar-section adv-section">
+        <h3>📢 Жарнама</h3>
+        <div class="adv-block__info">
+            {% for adv in advs|slice:":2" %}
+            <a href="#" class="adv-item">
+                <img src="{{ adv.image_url }}" alt="{{ adv.name }}">
+                <span class="adv-label">Жарнама</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - QazNews{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container-fluid">
+        <h1>📂 {{ category.name }}</h1>
+        <p>Категория бойынша жаңалықтар</p>
+    </div>
+</section>
+
+<section class="news-block">
+    <div class="container-fluid">
+        <div class="news-block-content">
+            {% for post in posts %}
+            <div class="news-block__card">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}"
+                     class="news-block__img">
+                <div class="news-block__info">
+                    <h4>{{ post.title|truncatewords:8 }}</h4>
+                    <span>{{ post.created_at|date:"d.m.Y" }} • {{ post.category.name }}</span>
+                    <a href="{% url 'news_by_category' pk=post.category.pk %}" class="category-tag">#{{ post.category.name }}</a>
+                    <p>{{ post.content|truncatewords:25 }}</p>
+                    <a href="{% url 'read_news_page' pk=post.pk %}" class="read-more">Оқу ▶</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-news">
+                <p>Бұл категорияда жаңалықтар әзірге жоқ</p>
+            </div>
+            {% endfor %}
+            
+            {% if posts.has_other_pages %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}" class="pagination-btn">◀ Алдыңғы</a>
+                {% endif %}
+                
+                <span class="pagination-info">
+                    Бет {{ posts.number }} / {{ posts.paginator.num_pages }}
+                </span>
+                
+                {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}" class="pagination-btn">Келесі ▶</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="sidebar">
+            <div class="sidebar-section popular-posts">
+                <h3>🔥 Танымал</h3>
+                <div class="popular-posts-list">
+                    {% for popular in popular_posts %}
+                    <a href="{% url 'read_news_page' pk=popular.pk %}" class="popular-post-item">
+                        <img src="{{ popular.image_url }}" alt="{{ popular.title }}">
+                        <div class="popular-post-info">
+                            <h4>{{ popular.title|truncatewords:6 }}</h4>
+                            <span>{{ popular.created_at|date:"d.m.Y" }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="sidebar-section categories-section">
+                <h3>📂 Категориялар</h3>
+                <div class="categories-list">
+                    {% for cat in categories %}
+                    <a href="{% url 'news_by_category' pk=cat.pk %}" class="category-item {% if cat.pk == category.pk %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="sidebar-section adv-section">
+                <h3>📢 Жарнама</h3>
+                <div class="adv-block__info">
+                    {% for adv in advs|slice:":2" %}
+                    <a href="#" class="adv-item">
+                        <img src="{{ adv.image_url }}" alt="{{ adv.name }}">
+                        <span class="adv-label">Жарнама</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile Sidebar -->
+<div class="mobile-sidebar">
+    <div class="sidebar-section popular-posts">
+        <h3>🔥 Танымал</h3>
+        <div class="popular-posts-list">
+            {% for popular in popular_posts|slice:":3" %}
+            <a href="{% url 'read_news_page' pk=popular.pk %}" class="popular-post-item">
+                <img src="{{ popular.image_url }}" alt="{{ popular.title }}">
+                <div class="popular-post-info">
+                    <h4>{{ popular.title|truncatewords:6 }}</h4>
+                    <span>{{ popular.created_at|date:"d.m.Y" }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="sidebar-section categories-section">
+        <h3>📂 Категориялар</h3>
+        <div class="categories-list">
+            {% for cat in categories %}
+            <a href="{% url 'news_by_category' pk=cat.pk %}" class="category-item {% if cat.pk == category.pk %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="sidebar-section adv-section">
+        <h3>📢 Жарнама</h3>
+        <div class="adv-block__info">
+            {% for adv in advs|slice:":2" %}
+            <a href="#" class="adv-item">
+                <img src="{{ adv.image_url }}" alt="{{ adv.name }}">
+                <span class="adv-label">Жарнама</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
